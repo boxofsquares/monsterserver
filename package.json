@@ -1,10 +1,21 @@
 {
-  "name": "dummy",
+  "name": "DnD Monster Crawler",
   "version": "1.0.0",
-  "description": "dummy file",
-  "main": "crawler/index.js",
+  "description": "Crawling DnD monster info off the web.",
+  "main": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "dnd",
+    "monsters",
+    "crawler"
+  ],
   "author": "Janik Andreas",
   "license": "ISC",
   "dependencies": {
+    "cheerio": "^1.0.0-rc.2",
+    "request": "^2.88.0",
+    "request-promise-native": "^1.0.5"
   }
 }
