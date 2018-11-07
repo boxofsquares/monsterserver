@@ -7,7 +7,6 @@ import (
 	"regexp"
 	"io/ioutil"
 	"os"
-	"os/exec"
 	"encoding/json"
 	"strconv"
 )
@@ -17,14 +16,13 @@ var result []Monster
 var maxNum int
 
 func main() {
-	cmd := exec.Command("node", "crawler/index.js")
-
-	log.Println("Calling node ...")
-	execErr := cmd.Run()
-	if execErr != nil {
-		log.Fatalf("node crawler/index.js failed with: %s\n", execErr)
-	}
-	log.Println("Monsters successfully crawled.")
+	// cmd := exec.Command("node", "crawler/index.js")
+	// log.Println("Calling node ...")
+	// execErr := cmd.Run()
+	// if execErr != nil {
+	// 	log.Fatalf("node crawler/index.js failed with: %s\n", execErr)
+	// }
+	// log.Println("Monsters successfully crawled.")
 
 	jsonFile, err := os.Open("crawler/monsters.json")
 	log.Println("Attempting to open monsters.json.")

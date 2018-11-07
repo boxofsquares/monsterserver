@@ -1,2 +1,2 @@
+release: node crawler/index.js
 web: monsterserver
-worker: node crawler/index.js

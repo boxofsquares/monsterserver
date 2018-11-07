@@ -1,0 +1,10 @@
+{
+  "name": "dummy",
+  "version": "1.0.0",
+  "description": "dummy file",
+  "main": "crawler/index.js",
+  "author": "Janik Andreas",
+  "license": "ISC",
+  "dependencies": {
+  }
+}
