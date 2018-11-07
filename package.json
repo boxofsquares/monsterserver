@@ -1,8 +1,8 @@
 {
-  "name": "DnD Monster Crawler",
+  "name": "dnd-monster-crawler",
   "version": "1.0.0",
   "description": "Crawling DnD monster info off the web.",
-  "main": "index.js",
+  "main": "",
   "keywords": [
     "dnd",
     "monsters",
