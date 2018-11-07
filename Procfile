@@ -1,2 +1,2 @@
-release: node crawler/index.js
+release: cd crawler && node index.js
 web: monsterserver
