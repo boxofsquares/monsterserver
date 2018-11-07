@@ -1,0 +1,3 @@
+A little project for crawling DND5e Monster information off of the web.
+
+Using [adrpadua]'s(https://github.com/adrpadua) excellent [API](https://github.com/adrpadua/5e-srd-api) to fetch all monster names. However, noticed that some info is missing and decided to use the potentially more up-to-date [DnDBeyond](www.dndbeyond.com) endpoints (ex. [https://www.dndbeyond.com/monsters/ancient-white-dragon/more-info]).
