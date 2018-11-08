@@ -27,7 +27,7 @@ func main() {
 	jsonFile, err := os.Open("monsters.json")
 	log.Println("Attempting to open monsters.json.")
 	if err != nil {
-		log.Fatalf("Could not find monster.json: %s\n", err);
+		log.Fatalf("Could not find monsters.json: %s\n", err);
 	}
 	log.Println("Found and opened latest monsters.json.")
 	defer jsonFile.Close()

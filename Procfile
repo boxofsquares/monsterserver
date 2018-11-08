@@ -1,2 +1,2 @@
-release: node crawler/index.js && mv monsters.json bin/ 
+release: node crawler/index.js
 web: monsterserver
