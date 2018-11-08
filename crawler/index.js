@@ -1,7 +1,8 @@
 const cheerio = require('cheerio');
 require('request'); // co-dependency to request-promise-native
 const request = require('request-promise-native');
-const fs = require('fs');
+const fs      = require('fs');
+const path    = require('path');
 'use strict';
 
 
@@ -100,10 +101,10 @@ request.get('http://dnd5eapi.co/api/monsters')
     });
 
 
-    fs.writeFileSync('./monsters.json', JSON.stringify(allMonsterObjs, null, '\t'));
+    fs.writeFileSync(path.resolve(__dirname, 'monsters.json'), JSON.stringify(allMonsterObjs, null, '\t'));
   })
   .then((none) => {
-    console.log("All done!");
+    console.log("All done! File written to " + __dirname);
   });
 
   function getAbilities(element) {
