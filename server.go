@@ -23,6 +23,10 @@ func main() {
 	// 	log.Fatalf("node crawler/index.js failed with: %s\n", execErr)
 	// }
 	// log.Println("Monsters successfully crawled.")
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
 
 	jsonFile, err := os.Open("crawler/monsters.json")
 	log.Println("Attempting to open monsters.json.")
@@ -39,8 +43,8 @@ func main() {
 
 	log.Println("Starting server ...")
 	http.HandleFunc("/api/monsters/", handler)
-	log.Fatal(http.ListenAndServe(":8080", nil))
-	log.Println("Listening on port 8080...")
+	log.Fatal(http.ListenAndServe(":" + port, nil))
+	log.Printf("Listening on port %s...\n", port)
 }
 
 func handler(w http.ResponseWriter, r *http.Request) (){
