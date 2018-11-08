@@ -17,7 +17,7 @@ const base = '.mon-stat-block';
 //       return $(elem).text().trim().toLowerCase().replace(/\s/g,'-');
 //     }).get();
 //     return allMonsters;
-//   })
+//   }
 console.log('Retrieving all monster names from dnd5eapi.co...');
 request.get('http://dnd5eapi.co/api/monsters')
   .then((res) => {
@@ -26,6 +26,16 @@ request.get('http://dnd5eapi.co/api/monsters')
       return obj.name.toLowerCase().replace(/\s/g, '-').replace("'", '');
     })
   })
+// donjon?
+// request.get('https://donjon.bin.sh/5e/monsters')
+//   .then((res) => {
+//     let $               = cheerio.load(res),
+//         allMonsterNames = $('#monster_list tr').data('name');
+//         console.log(res);
+//     allMonsterNames.map((i, elem) => {
+//       return $(elem).text().trim().toLowerCase().replace(/\s/g,'-').replace("'", '');
+//     }).get();
+//   })
   .then((res) => {
     let options = {
       resolveWithFullResponse: true
@@ -55,13 +65,17 @@ request.get('http://dnd5eapi.co/api/monsters')
         $ = cheerio.load(res);
         return !(res === 'failure' || $(base).length < 1); 
       })
-      .map(({ wikiName, res }) => {
+      .map(({ wikiName, res }, index) => {
       $ = cheerio.load(res);
       
       // Name
-      let monsterObj = {};
+      let monsterObj = { index: index};
       monsterObj.name =  $(base + '__name').text().trim();
       
+      // Size, race, alignment
+      let sizeRaceAlignment = $(base + '__meta');
+      monsterObj = { ...monsterObj, ...getSizeRaceAligment(sizeRaceAlignment)};
+
       // Attributes
       let attributes = $(base + '__attributes');
       monsterObj.attributes = getAttributes(attributes);
@@ -94,8 +108,10 @@ request.get('http://dnd5eapi.co/api/monsters')
       monsterObj.actions = descObj;
       
       // Flavor text
-      let flavor = $('.mon-details__description-block-content').text().trim().replace(/[\n]/g, '');
-      monsterObj.flavor = flavor;
+      let flavor = $('.mon-details__description-block-content').text().trim().replace(/\s{2,}/g, ' ');
+      if (flavor !== '') {
+        monsterObj.flavor = flavor;
+      }
 
       return monsterObj;
     });
@@ -107,6 +123,26 @@ request.get('http://dnd5eapi.co/api/monsters')
     console.log("All done! File written to " + __dirname);
   });
 
+  function getSizeRaceAligment(element) {
+    let metas = element.text(),
+    flagString = metas.match(/\(.*\)/g),
+    flag = flagString ? true : false,
+    returnObj = {};
+  
+    if (flag) {
+      metas = metas.replace(/\(.*\)\s*/g, '');
+      returnObj['spec-type'] = flagString[0].replace(/[\(\)]/g, '');
+    }
+    let metaSplits= metas.split(','),
+      sizeAndType = metaSplits[0].split(' '),
+      alignment = metaSplits[1];
+
+    returnObj.size = sizeAndType[0].toLowerCase().trim();
+    returnObj.type = sizeAndType.slice(1).join(' ').trim();
+    returnObj.alignment = alignment.trim();
+
+    return returnObj;
+  }
   function getAbilities(element) {
     let key = element.children().eq(0).text().toLowerCase().replace(/[\s\n]/g, '-');
     let stat = getScoreAndMod(element.children().eq(1));

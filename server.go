@@ -16,6 +16,9 @@ var result []Monster
 var maxNum int
 
 func main() {
+	// Abandoned: 
+	// Heroku does not seem to let one crate new files during release phase.
+	//
 	// cmd := exec.Command("node", "crawler/index.js")
 	// log.Println("Calling node ...")
 	// execErr := cmd.Run()
@@ -43,8 +46,8 @@ func main() {
 
 	log.Println("Starting server ...")
 	http.HandleFunc("/api/monsters/", handler)
-	log.Fatal(http.ListenAndServe(":" + port, nil))
 	log.Printf("Listening on port %s...\n", port)
+	log.Fatal(http.ListenAndServe(":" + port, nil))
 }
 
 func handler(w http.ResponseWriter, r *http.Request) (){
@@ -79,12 +82,17 @@ func handler(w http.ResponseWriter, r *http.Request) (){
 }
 
 type Monster struct {
-	Name string `json:"name"`
-	Attributes map[string]interface{} `json:attributes`
-	Abilities map[string]interface{} `json:"abilities"`
-	Traits map[string]interface{} `json:"traits"`
-	Actions map[string]interface{} `json:"actions"`
-	Flavor string `json:"flavor"`
+	Index 			int `json:"index"`
+	Name 				string `json:"name"`
+	Size 				string `json:"size"`
+	Alignment		string `json:"alignment"`
+	Type				string `json:"type"`
+	SpecType		string `json:"specType,omitempty"`
+	Attributes 	map[string]interface{} `json:"attributes"`
+	Abilities 	map[string]interface{} `json:"abilities"`
+	Traits 			map[string]interface{} `json:"traits"`
+	Actions 		map[string]interface{} `json:"actions"`
+	Flavor 			string `json:"flavor,omitempty"`
 }
 
 type CondensedMonster struct {
